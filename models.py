@@ -20,6 +20,6 @@ class Order(db.Model):
     quantity = db.Column(db.Float, nullable=False)
     amount = db.Column(db.Float, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
-    customer_code = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    customer_code = db.Column(db.Integer, db.ForeignKey('customers.id'), nullable=False)
     
     customer = db.relationship('Customer', backref=db.backref('orders', lazy=True))
