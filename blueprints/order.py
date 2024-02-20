@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_restful import Resource, Api, abort, reqparse, fields
 from models import Order, db
 from serializers import OrderSchema
+from datetime import datetime
 
 order_bp = Blueprint('order', __name__)
 api = Api(order_bp)
@@ -11,6 +12,7 @@ post_args = reqparse.RequestParser()
 post_args.add_argument('item', type=str, required=True)
 post_args.add_argument('quantity', type=float, required=True)
 post_args.add_argument('amount', type=float, required=True)
+post_args.add_argument('timestamp', type=datetime)
 post_args.add_argument('customer_code', type=int, required=True)
 
 patch_args = reqparse.RequestParser()
@@ -30,7 +32,18 @@ class Orders(Resource):
     def post(self):
         data = post_args.parse_args()
 
-        new_order = Order(item=data['item'], quantity=data['quantity'], amount=data['amount'], timestamp=data['timestamp'], customer_code=data['customer_code'])
+        timestamp_str = data.get('timestamp')
+        if timestamp_str:
+            timestamp = datetime.fromisoformat(timestamp_str)
+        else:
+            timestamp = datetime.utcnow()
+
+        new_order = Order(
+            item=data['item'], 
+            quantity=data['quantity'], 
+            amount=data['amount'], 
+            timestamp=timestamp, 
+            customer_code=data['customer_code'])
         db.session.add(new_order)
         db.session.commit()
         return order_schema.dump(new_order)

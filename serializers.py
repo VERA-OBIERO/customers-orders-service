@@ -11,7 +11,9 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
     firstname = ma.auto_field()
     lastname = ma.auto_field()
     email= ma.auto_field()
-    phone= ma.auto_field() 
+    phone= ma.auto_field()
+    
+    orders = ma.Nested("OrderSchema", many=True, exclude=("customer",)) 
 
 class OrderSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -22,4 +24,7 @@ class OrderSchema(ma.SQLAlchemyAutoSchema):
     quantity = ma.auto_field()
     amount= ma.auto_field()
     timestamp= ma.auto_field()
-    customer_code= ma.auto_field()
+    customer_firstname = ma.Function(lambda obj: obj.customer.firstname)
+    customer_lastname = ma.Function(lambda obj: obj.customer.lastname)
+
+    customer = ma.Nested(CustomerSchema, exclude=("orders",))
