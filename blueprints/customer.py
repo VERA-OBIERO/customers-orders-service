@@ -56,5 +56,14 @@ class CustomerById(Resource):
 
         return customer_schema.dump(customer)
     
+    def delete(self,id):
+        customer = Customer.query.filter_by(id=id).first()
+        if not customer:
+            abort(404, detail=f'customer with {id=} does not exist')
+        
+        db.session.delete(customer)
+        db.session.commit()
+        return{"detail": f"customer with {id=} has been deleted successfully"}
+    
 api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')
