@@ -1,14 +1,19 @@
 from flask import Flask
 from models import db
 from flask_migrate import Migrate
+from blueprints.customer import customer_bp, api as customer_api
+from serializers import ma
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///customer_orders.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+ma.init_app(app)
 migrate = Migrate(app, db)
 
+customer_api.init_app(customer_bp)
+app.register_blueprint(customer_bp)
 
 @app.route('/')
 def index():
