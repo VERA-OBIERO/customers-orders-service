@@ -37,18 +37,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Render CLI
-      uses: renderapp/action-setup-render-cli@v1
-      with:
-        render-token: ${{ secrets.rnd_a8a8wECZyQc4sqZvK0rday2b5MKA }}
-
-    - name: Configure Render
-      run: |
-        render configure --account-id ${{ secrets.vera }} --token ${{ secrets.rnd_a8a8wECZyQc4sqZvK0rday2b5MKA }}
-
     - name: Build and deploy to Render
       run: |
-        render deploy --github-auto-preview --name my-flask-app --branch main --build-command "pip install -r requirements.txt" --start-command "python3 app.py"
+        render deploy --github-auto-preview --name customers-orders-service --branch main --build-command "pip install -r requirements.txt" --start-command "python3 app.py"
 
 
 
