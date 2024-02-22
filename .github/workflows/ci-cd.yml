@@ -37,10 +37,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build and deploy to Render
-      run: |
-        render deploy --github-auto-preview --name customers-orders-service --branch main --build-command "pip install -r requirements.txt" --start-command "gunicorn app:app.py"
-
 
 
 
