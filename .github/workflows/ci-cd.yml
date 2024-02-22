@@ -39,7 +39,7 @@ jobs:
 
     - name: Build and deploy to Render
       run: |
-        render deploy --github-auto-preview --name customers-orders-service --branch main --build-command "pip install -r requirements.txt" --start-command "python3 app.py"
+        render deploy --github-auto-preview --name customers-orders-service --branch main --build-command "pip install -r requirements.txt" --start-command "flask run"
 
 
 
