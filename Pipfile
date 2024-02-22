@@ -11,6 +11,7 @@ flask-restful = "*"
 flask-marshmallow = "*"
 marshmallow = "*"
 flask-oidc = "==2.1.0"
+africastalking = "*"
 
 [dev-packages]
 
