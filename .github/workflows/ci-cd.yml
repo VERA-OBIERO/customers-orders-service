@@ -23,10 +23,28 @@ jobs:
     - name: Run tests
       run: pytest
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+deploy:
+  needs: build
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-    steps:
-    - name: Deploy to Production
+  steps:
+    - name: Install Render CLI
+      run: |
+        curl -sL https://render.com/install.sh | bash
+
+    - name: Authenticate with Render
+      run: render auth
+
+    - name: Build Application
+      run: |
+         flask run
+
+    - name: Deploy to Render
+      run: render deploy -- --auto
+
+    - name: Monitor Deployment
+      run: render logs
+
+
+
