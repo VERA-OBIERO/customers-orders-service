@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, abort, reqparse, fields
 from models import Order, db
 from serializers import OrderSchema
 from datetime import datetime
+from auth import oidc
 
 order_bp = Blueprint('order', __name__)
 api = Api(order_bp)
@@ -24,7 +25,7 @@ patch_args.add_argument('customer_code', type=int)
 order_schema = OrderSchema()
 
 class Orders(Resource):
-
+    @oidc.require_login
     def get(self):
         orders = Order.query.all()
         return order_schema.dump(orders, many=True)
