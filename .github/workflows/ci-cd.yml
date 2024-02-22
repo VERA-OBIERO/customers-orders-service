@@ -44,7 +44,7 @@ jobs:
 
     - name: Configure Render
       run: |
-        render configure --account-id ${{ secrets.vera.obiero@gmail.com }} --token ${{ secrets.rnd_a8a8wECZyQc4sqZvK0rday2b5MKA }}
+        render configure --account-id ${{ secrets.vera }} --token ${{ secrets.rnd_a8a8wECZyQc4sqZvK0rday2b5MKA }}
 
     - name: Build and deploy to Render
       run: |
