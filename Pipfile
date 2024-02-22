@@ -13,6 +13,7 @@ marshmallow = "*"
 flask-oidc = "==2.1.0"
 africastalking = "*"
 coverage = "*"
+gunicorn = "*"
 
 [dev-packages]
 
