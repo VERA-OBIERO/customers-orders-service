@@ -12,6 +12,8 @@ In the Orders table, customer_code is a foreign key referencing customer.id in t
  
 ## Deployment Link
 
+This link will help you interact with the GET endpoints without setting up anything.
+
  - https://customers-orders-service.onrender.com
 
 
@@ -24,18 +26,54 @@ Some of the endpoints include:
 ```json
 [
     {
-    "description": "Guy law door watch conference owner. Play analysis theory.",
-    "location": "St. Lucia",
-    "isAvailable": false,
-    "property_type": "Cottage",
-    "price": 910520.0,
-    "id": 1,
-    "title": "7757 Obrien Radial\nLake Philip, NJ 13431",
-    "image": "http://tinyurl.com/4adswm53"
-  }
+        {
+            "id": 1, 
+            "firstname": "Regina", 
+            "lastname": "Hope", 
+            "email": "hope.reg@gmail.com", 
+            "phone": "+254726799909", 
+            "orders": 
+                [
+                    {
+                        "id": 1, 
+                        "item": "Carpet", 
+                        "quantity": 2.0, 
+                        "amount": 2000.0, 
+                        "timestamp": "2024-02-23T12:09:46.459182", 
+                        "customer_firstname": "Regina", 
+                        "customer_lastname": "Hope"
+                    }, 
+                    {
+                        "id": 6, 
+                        "item": "Samosa", 
+                        "quantity": 15.0, 
+                        "amount": 1000.0, 
+                        "timestamp": "2024-02-23T12:09:46.471621", 
+                        "customer_firstname": "Regina", 
+                        "customer_lastname": "Hope"
+                    }
+                ]
+        }
+    }
     
 ]
 ```
+
+## Features
+
+1. `Implement authentication and authorization via OpenID Connect.`
+   The GET/customers and GET/orders end points require authentication and authorization through the Auth0 platform before accessing them.
+
+2. `SMS alerts.`
+   When an order is added through the POST/orders endpoint, an SMS is sent to the user as seen on the Africastalking sandbox simulator. The message referneces the first name of the customer making the order to alert them.
+
+3. `Unit tests (with coverage checking).`
+   In the directory tests, there is a file test_app.py that has a few unit tests to check the app. To run the tests, run the command `python -m unittest discover -s tests`. This will run all the test cases in the tests directory which is currently 1.
+   You can then verify the code coverage of the tests by running `coverage run -m unittest discover -s tests` followed by `coverage report -m` to display a detailed coverage showing which parts of the code are covered by tests and which ones are not.
+
+4. `CI + automated CD.`
+   For this feature I used GitHub Actions to set up a simple pipeline that checks the code, sets up Python, installs dependencies, runs tests and deploys to Render which is the PAAS of choice
+
 
 ## License
 
