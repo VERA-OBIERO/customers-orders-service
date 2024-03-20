@@ -1,5 +1,8 @@
 import unittest
 from app import app, db
+from unittest.mock import patch, MagicMock
+from africastalking_helper import send_sms
+from models import Order, Customer
 
 class TestApp(unittest.TestCase):
     def setUp(self):
@@ -18,6 +21,32 @@ class TestApp(unittest.TestCase):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode('utf-8'), 'Hello, World!')
+
+class TestAfricaTalkingHelper(unittest.TestCase):
+
+    @patch('africastalking.SMS')
+    def test_send_sms_success(self, mock_sms):
+        mock_response = {'SMSMessageData': {'Recipients': [{'number': '+254723456789', 'status': 'Success'}]}}
+        mock_sms.send.return_value = mock_response
+
+        message = "Test message"
+        recipients = ["+254723456789"]
+
+        response = send_sms(message, recipients)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(response, mock_response)
+
+    @patch('africastalking.SMS')
+    def test_send_sms_failure(self, mock_sms):
+        mock_sms.send.side_effect = Exception("Test exception")
+
+        message = "Test message"
+        recipients = ["+254723456789"]
+
+        response = send_sms(message, recipients)
+
+        self.assertIsNone(response)
 
 
 if __name__ == '__main__':
