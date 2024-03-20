@@ -46,10 +46,15 @@ class Orders(Resource):
             amount=data['amount'], 
             timestamp=timestamp, 
             customer_code=data['customer_code'])
+        
+        customer = Customer.query.get(data['customer_code'])
+        if customer:
+            new_order.customer = customer  # Associate the customer with the order
+        
         db.session.add(new_order)
         db.session.commit()
 
-        customer = Customer.query.get(data['customer_code'])
+        #customer = Customer.query.get(data['customer_code'])
         if customer:
             message = f"Hello {customer.firstname}, your order has been placed successfully."
             response = send_sms(message, [customer.phone])

@@ -3,6 +3,7 @@ from models import db
 from flask_migrate import Migrate
 from customer import customer_bp, api as customer_api
 from order import order_bp, api as order_api
+from swagger import swaggerui_bp
 from serializers import ma
 from auth import oidc
 
@@ -24,6 +25,8 @@ app.register_blueprint(customer_bp)
 
 order_api.init_app(order_bp)
 app.register_blueprint(order_bp)
+
+app.register_blueprint(swaggerui_bp, url_prefix="/swagger")
 
 @app.route('/')
 def index():

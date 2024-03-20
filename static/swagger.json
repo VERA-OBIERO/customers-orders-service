@@ -1,0 +1,281 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Flask API Documentation",
+      "version": "1.0",
+      "description": "API documentation for Customer-Orders app"
+    },
+    "paths": {
+      "/orders": {
+        "get": {
+          "summary": "Retrieve all orders",
+          "responses": {
+            "200": {
+              "description": "List of orders"
+            }
+          },
+          "security": [
+            {
+              "OIDC": []
+            }
+          ]
+        },
+        "post": {
+          "summary": "Create a new order",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewOrder"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Order created"
+            }
+          }
+        }
+      },
+      "/orders/{id}": {
+        "get": {
+          "summary": "Retrieve details of a specific order by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details of the specified order"
+            }
+          }
+        },
+        "patch": {
+          "summary": "Update details of a specific order by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrder"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order updated"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a specific order by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Order deleted"
+            }
+          }
+        }
+      },
+      "/customers": {
+        "get": {
+          "summary": "Retrieve all customers",
+          "responses": {
+            "200": {
+              "description": "List of customers"
+            }
+          },
+          "security": [
+            {
+              "OIDC": []
+            }
+          ]
+        },
+        "post": {
+          "summary": "Create a new customer",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewCustomer"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Customer created"
+            }
+          }
+        }
+      },
+      "/customers/{id}": {
+        "get": {
+          "summary": "Retrieve details of a specific customer by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details of the specified customer"
+            }
+          }
+        },
+        "patch": {
+          "summary": "Update details of a specific customer by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomer"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Customer updated"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a specific customer by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Customer deleted"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "NewOrder": {
+          "type": "object",
+          "properties": {
+            "item": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "number"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "customer_code": {
+              "type": "integer"
+            }
+          },
+          "required": ["item", "quantity", "amount", "customer_code"]
+        },
+        "UpdateOrder": {
+          "type": "object",
+          "properties": {
+            "item": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "number"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "customer_code": {
+              "type": "integer"
+            }
+          }
+        },
+        "NewCustomer": {
+          "type": "object",
+          "properties": {
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          },
+          "required": ["firstname", "lastname", "email", "phone"]
+        },
+        "UpdateCustomer": {
+          "type": "object",
+          "properties": {
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
