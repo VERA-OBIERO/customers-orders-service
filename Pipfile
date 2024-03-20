@@ -14,6 +14,7 @@ flask-oidc = "==2.1.0"
 africastalking = "*"
 coverage = "*"
 gunicorn = "*"
+flask-swagger-ui = "*"
 
 [dev-packages]
 
