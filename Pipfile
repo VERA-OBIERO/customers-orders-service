@@ -15,6 +15,9 @@ africastalking = "*"
 coverage = "*"
 gunicorn = "*"
 flask-swagger-ui = "*"
+google-auth-oauthlib = "*"
+cachecontrol = "*"
+google-auth = "*"
 
 [dev-packages]
 

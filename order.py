@@ -5,6 +5,7 @@ from serializers import OrderSchema
 from datetime import datetime
 from auth import oidc
 from africastalking_helper import send_sms
+from login import login_is_required
 
 order_bp = Blueprint('order', __name__)
 api = Api(order_bp)
@@ -26,7 +27,10 @@ patch_args.add_argument('customer_code', type=int)
 order_schema = OrderSchema()
 
 class Orders(Resource):
-    @oidc.require_login
+    def __init__(self):
+        pass  
+    
+    @login_is_required
     def get(self):
         orders = Order.query.all()
         return order_schema.dump(orders, many=True)

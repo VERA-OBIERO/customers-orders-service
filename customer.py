@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_restful import Resource, Api, abort, reqparse
 from models import Customer, db
 from serializers import CustomerSchema
+from login import login_is_required
 from auth import oidc
 
 customer_bp = Blueprint('customer', __name__)
@@ -23,7 +24,7 @@ customer_schema = CustomerSchema()
 
 class Customers(Resource):
 
-    @oidc.require_login
+    @login_is_required
     def get(self):
         customers = Customer.query.all()
         return customer_schema.dump(customers, many=True)
